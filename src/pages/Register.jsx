@@ -25,7 +25,8 @@ const Register = () => {
       setSuccess('Account created successfully! Redirecting to login...');
       setTimeout(() => navigate('/login'), 1500);
     } catch (err) {
-      setError(err.response?.data?.message || 'Registration failed. Try a different email.');
+      const msg = err.response?.data?.message || (typeof err.response?.data === 'string' ? err.response?.data : null) || err.message || 'Registration failed.';
+      setError(typeof msg === 'string' ? msg : 'Registration failed.');
     } finally {
       setLoading(false);
     }
